@@ -1,4 +1,4 @@
-package com.myapp.shoppernest.activities
+package com.myapp.shoppernest.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,6 +16,8 @@ class SearchPageFragment : Fragment() {
     }
 
     private var searchQuery: String? = null
+
+    var pendingState: Bundle? = null
 
     companion object {
         private const val ARG_SEARCH_QUERY = "search_query"
@@ -52,6 +54,20 @@ class SearchPageFragment : Fragment() {
 
         searchQuery?.let { binding.webView.loadUrl(it) }
 
+
+        pendingState?.let {
+            restoreState(it)
+            pendingState = null
+        }
+
+    }
+
+    fun saveState(outState: Bundle) {
+        binding.webView.saveState(outState)
+    }
+
+    fun restoreState(savedInstanceState: Bundle) {
+        binding.webView.restoreState(savedInstanceState)
     }
 
 //    fun loadUrl(url: String) {
